@@ -1,0 +1,27 @@
+@import './colors';
+
+@mixin theme($name) {
+	@if map-has-key($colors, $name) {
+		$background: map-deep-get($colors, $name, "darken-4");
+		$color: map-deep-get($colors, $name, "lighten-5");
+		$lighten-background: lighten($background, 10%);
+
+		.#{"" + $name} {
+			color: $background;
+			box-shadow: $background 0 0 0 1px inset;
+
+			.header {
+				color: $color;
+				@include background-linear-gradient($background, $lighten-background);
+			}
+			a.selected {
+				color: $color;
+				@include background-linear-gradient($background, $lighten-background);
+			}
+		}
+	}
+}
+
+@each $key, $value in $colors {
+	@include theme($key);
+}

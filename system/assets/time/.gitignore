@@ -1,0 +1,26 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules
+
+# dist
+dist
+
+# Optional npm cache directory
+.npm
+
+#eslint
+.eslintcache
+
+# cypress
+cypress/cypress.json
+cypress/screenshots
+cypress/videos
+
+# vscode
+.vscode/snipsnap.code-snippets
+
+public/timepicker.js
