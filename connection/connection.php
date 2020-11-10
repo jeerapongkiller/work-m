@@ -6,7 +6,7 @@
 	$hostname_connection = "localhost";
 	$database_connection = "system_police";
 	$username_connection = "root";
-	$password_connection = "123456789";
+	$password_connection = "password";
 
     $connection = mysqli_connect($hostname_connection, $username_connection, $password_connection, $database_connection);
     

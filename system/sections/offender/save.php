@@ -17,33 +17,6 @@ if (!empty($id)) {
 }
 ?>
 
-<script>
-    function offen_plaint(page, offen) {
-        jQuery.ajax({
-            url: "sections/offender/" + page + ".php",
-            data: {
-                offen: offen
-            },
-            type: "POST",
-            success: function(response) {
-                if (response) {
-                    swal.fire({
-                        title: 'เพิ่มข้อหา ',
-                        width: 1000,
-                        html: response,
-                        showConfirmButton: false,
-                        showCancelButton: false,
-                        showCloseButton: true
-                    }).then((result) => {
-
-                    });
-                }
-            }
-        });
-
-    }
-</script>
-
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-3 widget-content">
@@ -151,7 +124,7 @@ if (!empty($id)) {
                 <h5><b>ข้อหา</b></h5>
                 <div class="btn-actions-pane-right">
                     <div role="group" class="btn-group-sm btn-group">
-                        <button class="mb-3 btn btn-info btn-lg" onClick="offen_plaint('create_plaint','<?php echo $row['id']; ?>')"><i class="fas fa-plus"></i>&nbsp; เพิ่มข้อหา</button>
+                        <a href="./?mode=offender/create_plaint&offen=<?php echo $id; ?>" class="mb-3 btn btn-info btn-lg" ><i class="fas fa-plus"></i>&nbsp; เพิ่มข้อหา</a>
                     </div>
                 </div>
             </div>
