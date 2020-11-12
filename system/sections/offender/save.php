@@ -189,8 +189,7 @@ if (!empty($id)) {
                                 <th class="text-center">วันที่จับ</th>
                                 <th class="text-center">เวลาจับ</th>
                                 <th class="text-center">สถานที่จับ</th>
-                                <th class="text-center">หลักฐาน</th>
-                                <th class="text-center">แก้ใข</th>
+                                <th class="text-center">รายละเอียด</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -207,9 +206,6 @@ if (!empty($id)) {
                                     <td class="text-center"><?php echo DateThai($rowp['plaint_date']); ?></td>
                                     <td class="text-center"><?php echo date('H:i', strtotime($rowp['plaint_time'])) . " น."; ?></td>
                                     <td class="text-center"><?php echo $rowp['plaint_address']; ?></td>
-                                    <td class="text-center">
-                                        <a href="#view" onclick="view_material('<?php echo $rowp['id']; ?>', '<?php echo $plaint_type; ?>', 'ajax_view_material')"><i class="fas fa-eye"></i></a>
-                                    </td>
                                     <td class="text-center">
                                         <a href="./?mode=offender/save_plaint&offen=<?php echo $id; ?>&id=<?php echo $rowp['id']; ?>"><i class="fas fa-edit"></i></a>
                                     </td>

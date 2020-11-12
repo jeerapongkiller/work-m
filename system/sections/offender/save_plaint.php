@@ -1,7 +1,7 @@
 <?php
 $offen = !empty($_GET['offen']) ? $_GET['offen'] : '';
 $id = !empty($_GET['id']) ? $_GET['id'] : '';
-$name_offen = get_value('offender', 'id', 'firstname', $offen, $connection).' '.get_value('offender', 'id', 'lastname', $offen, $connection);
+$name_offen = get_value('offender', 'id', 'firstname', $offen, $connection) . ' ' . get_value('offender', 'id', 'lastname', $offen, $connection);
 if (!empty($id)) {
     $sql = "SELECT * FROM plaint WHERE id = '$id'";
     $result = mysqli_query($connection, $sql);
@@ -20,7 +20,7 @@ if (!empty($id)) {
 ?>
 
 <script>
-    function add_plaintt(page){
+    function add_plaintt(page) {
         var plaint_type = document.getElementById('plaint_type').value;
         if (plaint_type == 'add_plaint_type') {
             Swal.fire({
@@ -55,7 +55,7 @@ if (!empty($id)) {
                             Swal.fire('บันทึกข้อมูลไม่สำเร็จ!', 'กรุณาลองใหม่อีกครั้ง', 'error')
                         }
                     });
-                }else{
+                } else {
                     document.getElementById("zero_plaint_type").selected = "true";
                 }
             })
@@ -137,4 +137,53 @@ if (!empty($id)) {
         </div>
     </div>
 </div>
-<?php mysqli_close($connection); ?>
+
+<?php if(!empty($id)){ ?>
+<div class="row">
+    <div class="col-md-12">
+        <div class="main-card mb-3 card">
+            <div class="card-header mt-2 mb-3">
+                <h5><b>หลักฐาน</b></h5>
+                <div class="btn-actions-pane-right">
+                    <div role="group" class="btn-group-sm btn-group">
+                        <a href="./?mode=offender/save_material&offen=<?php echo $offen; ?>&plaint=<?php echo $id; ?>" class="mb-3 btn btn-info btn-lg"><i class="fas fa-plus"></i>&nbsp; เพิ่มหลักฐาน</a>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="align-middle mb-0 table table-borderless table-striped table-hover table-login">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th>หลักฐาน</th>
+                            <th class="text-center">จำนวน</th>
+                            <th class="text-center">หน่วย</th>
+                            <th class="text-center">แก้ใข</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center text-muted"> 1 </td>
+                            <td> ยาเสพติด </td>
+                            <td class="text-center"> </td>
+                            <td class="text-center"> </td>
+                            <td class="text-center"> </td>
+                            <td class="text-center">
+                                <a href="#"><i class="fas fa-eye"></i></a>
+                            </td>
+                            <td class="text-center">
+                                <a href="#"><i class="fas fa-edit"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-block text-center card-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+<?php }
+mysqli_close($connection);
+ ?>

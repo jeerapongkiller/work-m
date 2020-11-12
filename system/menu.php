@@ -40,7 +40,7 @@
                     <a href="./?mode=plaint/index" class="<?php if(strstr($_GET['mode'], "plaint/")){ echo "mm-active"; } ?>"><i class="metismenu-icon pe-7s-paperclip"></i> ข้อหา </a>
                 </li>
                 <li>
-                    <a href="./?mode=material/index" class="<?php if(strstr($_GET['mode'], "material/")){ echo "mm-active"; } ?>"><i class="metismenu-icon pe-7s-drop"></i> ของกลาง </a>
+                    <a href="./?mode=material/index" class="<?php if(strstr($_GET['mode'], "material/")){ echo "mm-active"; } ?>"><i class="metismenu-icon pe-7s-drop"></i> หลักฐาน </a>
                 </li>
                 <li class="app-sidebar__heading"> พนักงาน </li>
                 <li>
