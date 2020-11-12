@@ -1,14 +1,25 @@
-<div class="text-right">
-    <a href="./?mode=offender/save" class="mb-3 btn btn-info btn-lg"><i class="fas fa-plus"></i>&nbsp; เพิ่มข้อมูล</a>
-</div>
-
-
 <?php
 #------ Search Employee -------#
 // $search_position = !empty($_POST['search_position']) ? $_POST['search_position'] : '';
 // $search_fname = !empty($_POST['search_fname']) ? $_POST['search_fname'] : '';
 // $search_lname = !empty($_POST['search_lname']) ? $_POST['search_lname'] : '';
 ?>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">การจับกุม</li>
+            </ol>
+        </div>
+    </div>
+    <div class="col-md-4 text-right">
+        <div class="text-right">
+            <a href="./?mode=offender/save" class="mb-3 btn btn-info btn-lg"><i class="fas fa-plus"></i>&nbsp; เพิ่มข้อมูล</a>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-3 widget-content">

@@ -33,7 +33,7 @@
             $return_url = '&id='.$id.'&offen='.$offen;
             $message_alert = 'success';
         }
-        echo "<meta http-equiv=\"refresh\" content=\"0; url='./?mode=offender/create_plaint" . $return_url . "&message=" . $message_alert . "'\" >";
+        echo "<meta http-equiv=\"refresh\" content=\"0; url='./?mode=offender/save_plaint" . $return_url . "&message=" . $message_alert . "'\" >";
     }else{
         $message_alert = 'error';
         echo "<meta http-equiv=\"refresh\" content=\"0; url='./?mode=offender/index" . $return_url . "&message=" . $message_alert . "'\" >";
