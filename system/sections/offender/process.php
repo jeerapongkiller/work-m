@@ -81,7 +81,7 @@
                 $ext_n = count($ext) - 1;
                 $photo_fullname2 = $photo_time.$no.".".$ext[$ext_n];
                 $uploadfile = $uploaddir."$photo_fullname2";
-                if(move_uploaded_file($photo1, $uploadfile)){ 
+                if(move_uploaded_file($photo2, $uploadfile)){ 
                 }
             }else{
                 $photo_fullname2 = $photo_de2;
@@ -121,6 +121,7 @@
 
             $return_url = '&id='.$id;
             $message_alert = 'success';
+
         }
         echo "<meta http-equiv=\"refresh\" content=\"0; url='./?mode=offender/save" . $return_url . "&message=" . $message_alert . "'\" >";
     }else{

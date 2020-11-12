@@ -1,6 +1,6 @@
 <?php
-$offen = $_GET['offen'];
-$id = $_GET['id'];
+$offen = !empty($_GET['offen']) ? $_GET['offen'] : '' ;
+$id = !empty($_GET['id']) ? $_GET['id'] : '' ;
 if (!empty($id)) {
     $sql = "SELECT * FROM plaint WHERE id = '$id'";
     $result = mysqli_query($connection, $sql);
@@ -23,7 +23,7 @@ if (!empty($id)) {
             <div class="widget-content-outer">
                 <div class="widget-content-left">
                     <h5><b>เพิ่มข้อหา</b></h5>
-                    <form method="POST" action="./?mode=offender/save_plaint&id=<?php echo $id; ?>" enctype="multipart/form-data">
+                    <form method="POST" action="./?mode=offender/process_plaint&id=<?php echo $id; ?>" enctype="multipart/form-data">
                         <input type="hidden" name="page_title" id="page_title" value="<?php echo $page_title; ?>">
                         <input type="hidden" name="offen" id="offen" value="<?php echo $offen; ?>">
                         <div class="form-row">

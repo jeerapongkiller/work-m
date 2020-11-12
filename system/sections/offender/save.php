@@ -134,21 +134,34 @@ if (!empty($id)) {
                         <tr>
                             <th class="text-center">#</th>
                             <th>ข้อหา</th>
+                            <th class="text-center">วันที่จับ</th>
+                            <th class="text-center">เวลาจับ</th>
+                            <th class="text-center">สถานที่จับ</th>
                             <th class="text-center">หลักฐาน</th>
                             <th class="text-center">แก้ใข</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <?php 
+                            $i = '1';
+                            $sqlp = "SELECT * FROM plaint WHERE id > '0' AND status = '1' AND offender = '". $id ."' ORDER BY id ASC";
+                            $resulp = mysqli_query($connection, $sqlp);
+                            while ($rowp = mysqli_fetch_assoc($resulp)) {
+                        ?>
                         <tr>
-                            <td class="text-center text-muted">1</td>
-                            <td>ค้ายา</td>
+                            <td class="text-center text-muted"><?php echo $i; ?></td>
+                            <td><?php echo get_value('plaint_type', 'id', 'name', $rowp['plaint_type'], $connection); ?></td>
+                            <td class="text-center"><?php echo $rowp['plaint_date']; ?></td>
+                            <td class="text-center"><?php echo $rowp['plaint_time']; ?></td>
+                            <td class="text-center"><?php echo $rowp['plaint_address']; ?></td>
                             <td class="text-center">
                                 <a href="#"><i class="fas fa-eye"></i></a>
                             </td>
                             <td class="text-center">
-                                <a href="#"><i class="fas fa-edit"></i></a>
+                                <a href="./?mode=offender/create_plaint&offen=<?php echo $id; ?>&id=<?php echo $rowp['id']; ?>"><i class="fas fa-edit"></i></a>
                             </td>
                         </tr>
+                        <?php $i++; } ?>
                     </tbody>
                 </table>
             </div>
