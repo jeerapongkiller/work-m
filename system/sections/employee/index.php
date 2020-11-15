@@ -4,47 +4,75 @@
 
 <script>
     function delete_employee(id, name) {
-        bootbox.confirm({
-            backdrop: true,
-            closeButton: false,
-            message: "<h5 class=\"text-center mt-3 mb-3\"> คุณต้องการลบ <b>'"+name+"'</b> ใช้หรือไม่? </h5>",
-            buttons: {
-                cancel: {
-                    label: '<i class="fa fa-times"></i>&nbsp;&nbsp; ยกเลิก',
-                    className: 'btn-danger'
-                },
-                confirm: {
-                    label: '<i class="fa fa-check"></i>&nbsp;&nbsp; ยืนยัน',
-                    className: 'btn-success'
-                }
-            },
-            callback: function(result) {
-                if(result){
-                    jQuery.ajax({
-                        url: "sections/employee/delete.php",
-                        data: {
-                            id: id,
-                            name: name
-                        },
-                        type: "POST",
-                        success: function(response) {
-                            bootbox.alert({
-                                message: "<h5 class=\"text-center mt-3 mb-3\"> ทำการลบ <b>'"+response+"'</b> สำเร็จแล้ว! </h5>",
-                                backdrop: true,
-                                closeButton: false,
-                                buttons: {
-                                    ok: { label: 'ตกลง' }
-                                },
-                                callback: function(result) {
-                                    location.href = "<?php echo $_SERVER['REQUEST_URI']; ?>";
-                                }
-                            });
-                        },
-                        error: function() {}
-                    });
-                }
+        Swal.fire({
+            type: 'warning',
+            title: 'คุณแน่ใจไหม?',
+            text: "คุณต้องการลบข้อมูลนี้ใช่หรือไม่?",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'ใช่ ลบข้อมูล!',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.value) {
+                jQuery.ajax({
+                    url: "sections/employee/delete.php",
+                    data: {
+                        id: id
+                    },
+                    type: "POST",
+                    success: function(response) {
+                        Swal.fire({
+                            title: "ลบข้อมูลเสร็จสิ้น!",
+                            text: "ข้อมูลที่คุณเลือกถูกลบออกจากระบบแล้ว",
+                            type: "success"
+                        }).then(function() {
+                            location.href = "<?php echo $_SERVER['REQUEST_URI']; ?>";
+                        });
+                    },
+                    error: function() {
+                        Swal.fire('ลบข้อมูลไม่สำเร็จ!', 'กรุณาลองใหม่อีกครั้ง', 'error')
+                    }
+                });
             }
-        });
+        })
+        return true;
+    }
+
+    function restore_employee(id, name) {
+        Swal.fire({
+            type: 'warning',
+            title: 'คุณแน่ใจไหม?',
+            text: "คุณต้องการคืนข้อมูลนี้ใช่หรือไม่?",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'ใช่ คืนข้อมูล!',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.value) {
+                jQuery.ajax({
+                    url: "sections/employee/restore.php",
+                    data: {
+                        id: id
+                    },
+                    type: "POST",
+                    success: function(response) {
+                        Swal.fire({
+                            title: "คืนข้อมูลเสร็จสิ้น!",
+                            text: "ข้อมูลที่คุณเลือกกลับเข้าสู่ระบบแล้ว",
+                            type: "success"
+                        }).then(function() {
+                            location.href = "<?php echo $_SERVER['REQUEST_URI']; ?>";
+                        });
+                    },
+                    error: function() {
+                        Swal.fire('คืนข้อมูลไม่สำเร็จ!', 'กรุณาลองใหม่อีกครั้ง', 'error')
+                    }
+                });
+            }
+        })
+        return true;
     }
 </script>
 
@@ -118,12 +146,15 @@ $search_lname = !empty($_POST['search_lname']) ? $_POST['search_lname'] : '';
                             <th class="text-center">เบอร์โทร</th>
                             <th class="text-center">แก้ใข</th>
                             <th class="text-center">ลบ</th>
+                            <?php if ($_SESSION["admin"]["permission"] == 'Administrator') { ?>
+                                <th class="text-center">คืน</th>
+                            <?php } ?>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                         $i = '1';
-                        $sqlem = "SELECT * FROM employee WHERE id > '0'";
+                        $sqlem = "SELECT * FROM employee WHERE id > '0' AND permission = 'Member' ";
                         if (!empty($search_position)) {
                             $sqlem .= "AND position = '" . $search_position . "' ";
                         }
@@ -132,6 +163,9 @@ $search_lname = !empty($_POST['search_lname']) ? $_POST['search_lname'] : '';
                         }
                         if (!empty($search_lname)) {
                             $sqlem .= "AND lastname LIKE '" . $search_lname . "%' ";
+                        }
+                        if ($_SESSION["admin"]["permission"] != 'Administrator') {
+                            $sqlem .= "AND status = '1' ";
                         }
                         $sqlem .= "ORDER BY id ASC";
                         $resulem = mysqli_query($connection, $sqlem);
@@ -163,9 +197,14 @@ $search_lname = !empty($_POST['search_lname']) ? $_POST['search_lname'] : '';
                                 <td class="text-center">
                                     <a href="#" onclick="delete_employee('<?php echo $rowem['id']; ?>', '<?php echo $full_name; ?>')"><i class="fas fa-trash-alt" style="color: #FF0000;"></i></a>
                                 </td>
+                                <?php if ($_SESSION["admin"]["permission"] == 'Administrator') { ?>
+                                    <td class="text-center">
+                                        <?php if ($rowem['status'] == '2') { ?> <a href="#" onclick="restore_employee('<?php echo $rowem['id']; ?>', '<?php echo $full_name; ?>')"><i class="fas fa-undo-alt" style="color: #00FF00;"></i></a> <?php } ?>
+                                    </td>
+                                <?php } ?>
                             </tr>
                         <?php $i++;
-                            }
+                        }
                         mysqli_close($connection);
                         ?>
                     </tbody>

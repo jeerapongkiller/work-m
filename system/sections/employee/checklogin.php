@@ -17,7 +17,7 @@
             $full_name = $acronym . ' ' . $row['firstname'] . ' ' . $row['lastname'];
 
             $_SESSION["admin"]["id"] = $row["id"];
-            // $_SESSION["admin"]["permission"] = $row["permission"];
+            $_SESSION["admin"]["permission"] = $row["permission"];
             $_SESSION["admin"]["firstname"] = $row["firstname"];
             $_SESSION["admin"]["lastname"] = $row["lastname"];
             $_SESSION["admin"]["photo"] = $row["photo"];

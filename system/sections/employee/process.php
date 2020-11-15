@@ -57,6 +57,7 @@
         if(!empty($id)) {
             $sql = "UPDATE employee SET ";
             $sql .= "status = '1',";
+            $sql .= "permission = 'Member',";
             $sql .= "username = '$username',";
             $sql .= "password = '$password',";
             $sql .= "titlename = '$titlename',";

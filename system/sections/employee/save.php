@@ -1,19 +1,48 @@
 <?php
-    $id = $_GET['id'];
-    if(!empty($id)){
-		$sql = "SELECT * FROM employee WHERE id = '$id'";
-		$result = mysqli_query($connection, $sql);
-		$total = mysqli_num_rows($result);
-		
-		if($total == 0){ echo "<meta http-equiv=\"refresh\" content=\"0; url = './?mode=employee/index'\" >"; }
-		
-		$row = mysqli_fetch_assoc($result);
-		
-		$page_title = $row['username'];
-	}else{
-		$page_title = "Create";
-	}
+$id = $_GET['id'];
+if (!empty($id)) {
+    $sql = "SELECT * FROM employee WHERE id = '$id'";
+    $result = mysqli_query($connection, $sql);
+    $total = mysqli_num_rows($result);
+
+    if ($total == 0) {
+        echo "<meta http-equiv=\"refresh\" content=\"0; url = './?mode=employee/index'\" >";
+    }
+
+    $row = mysqli_fetch_assoc($result);
+
+    $page_title = $row['username'];
+} else {
+    $page_title = "Create";
+}
 ?>
+
+<script>
+    function check_username() {
+        var username = document.getElementById('username');
+        username.value = username.value.replace(/[^A-Za-z0-9]+/, '');
+
+        jQuery.ajax({
+            url: "sections/employee/checkusername.php",
+            data: {
+                username: username.value
+            },
+            type: "POST",
+            success: function(response) {
+                if (response == "error") {
+                    Swal.fire({
+                        type: 'error',
+                        text: 'กรุณาระบุชื่อผู้ใช้ใหม่ เพราะชื่อผู้ใช้ที่ระบุถูกใช้งานแล้ว',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+            },
+            error: function() {}
+        });
+    }
+</script>
+
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-3 widget-content">
@@ -26,26 +55,28 @@
                             <div class="col-md-6">
                                 <div class="position-relative form-group">
                                     <label for="username" class="">ชื่อผู้ใช้</label>
-                                    <input name="username" id="username" type="text" class="form-control" value="<?php echo $row['username']; ?>">
+                                    <input name="username" id="username" type="text" class="form-control" value="<?php echo !empty($row['username']) ? $row['username'] : ''; ?>" <?php echo !empty($row['username']) ? 'readonly' : ''; ?> onkeyup="check_username()">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="position-relative form-group">
                                     <label for="password" class="">รหัสผ่าน</label>
-                                    <input name="password" id="password" type="text" class="form-control" value="<?php echo $row['password']; ?>">
+                                    <input name="password" id="password" type="text" class="form-control" value="<?php echo !empty($row['password']) ? $row['password'] : ''; ?>">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="position-relative form-group">
                                     <label for="titlename" class="">คำนำหน้า</label>
                                     <select id="titlename" name="titlename" class="form-control">
-									    <option value=""> กรุณาเลือก... </option>
+                                        <option value=""> กรุณาเลือก... </option>
                                         <?php
-                                            $sqltt = "SELECT * FROM titlename WHERE id > '0' ORDER BY id ASC";
-                                            $resultt = mysqli_query($connection, $sqltt);
-                                            while($rowtt = mysqli_fetch_assoc($resultt)){
+                                        $sqltt = "SELECT * FROM titlename WHERE id > '0' ORDER BY id ASC";
+                                        $resultt = mysqli_query($connection, $sqltt);
+                                        while ($rowtt = mysqli_fetch_assoc($resultt)) {
                                         ?>
-                                            <option value="<?php echo $rowtt['id']; ?>" <?php if($rowtt['id'] == $row['titlename']){ echo "selected"; } ?>><?php echo $rowtt['name']; ?></option>
+                                            <option value="<?php echo $rowtt['id']; ?>" <?php if ($rowtt['id'] == $row['titlename']) {
+                                                                                            echo "selected";
+                                                                                        } ?>><?php echo $rowtt['name']; ?></option>
                                         <?php } /* while($rowtt = mysqli_fetch_assoc($resultt)){ */ ?>
                                     </select>
                                 </div>
@@ -66,13 +97,15 @@
                                 <div class="position-relative form-group">
                                     <label for="position" class="">ตำแหน่ง</label>
                                     <select id="position" name="position" class="form-control">
-									    <option value=""> กรุณาเลือก... </option>
+                                        <option value=""> กรุณาเลือก... </option>
                                         <?php
-                                            $sqlps = "SELECT * FROM position WHERE id > '0' ORDER BY id ASC";
-                                            $resulps = mysqli_query($connection, $sqlps);
-                                            while($rowps = mysqli_fetch_assoc($resulps)){
+                                        $sqlps = "SELECT * FROM position WHERE id > '0' ORDER BY id ASC";
+                                        $resulps = mysqli_query($connection, $sqlps);
+                                        while ($rowps = mysqli_fetch_assoc($resulps)) {
                                         ?>
-                                            <option value="<?php echo $rowps['id']; ?>" <?php if($rowps['id'] == $row['position']){ echo "selected"; } ?>><?php echo $rowps['name']." / ".$rowps['acronym']; ?></option>
+                                            <option value="<?php echo $rowps['id']; ?>" <?php if ($rowps['id'] == $row['position']) {
+                                                                                            echo "selected";
+                                                                                        } ?>><?php echo $rowps['name'] . " / " . $rowps['acronym']; ?></option>
                                         <?php } /* while($rowps = mysqli_fetch_assoc($resulps)){ */ ?>
                                     </select>
                                 </div>
