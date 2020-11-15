@@ -9,7 +9,7 @@
         unlink($uploaddir.$photo_de);
 
         #---- Delete Data ----#
-        $sqlmt = "DELETE FROM material WHERE id = '".$_POST['id']."' ";
+        $sqlmt = "DELETE FROM material_type WHERE id = '".$_POST['id']."' ";
         $resulmt = mysqli_query($connection, $sqlmt);
 
         echo $_POST['name'];

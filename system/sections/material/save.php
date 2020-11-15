@@ -1,7 +1,7 @@
 <?php
     $id = $_GET['id'];
     if(!empty($id)){
-		$sql = "SELECT * FROM material WHERE id = '$id'";
+		$sql = "SELECT * FROM material_type WHERE id = '$id'";
 		$result = mysqli_query($connection, $sql);
 		$total = mysqli_num_rows($result);
 		

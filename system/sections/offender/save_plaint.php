@@ -162,19 +162,25 @@ if (!empty($id)) {
                         </tr>
                     </thead>
                     <tbody>
+                        <?php
+                            $i = '1';
+                            $sqlm = "SELECT * FROM material WHERE id > '0' AND status = '1' AND plaint = '" . $id . "' ORDER BY id ASC";
+                            $resulm = mysqli_query($connection, $sqlm);
+                            while ($rowm = mysqli_fetch_assoc($resulm)) {
+                                $material_type = get_value('material_type', 'id', 'name', $rowm['material_type'], $connection);
+                                $material_unit = get_value('material_type', 'id', 'unit', $rowm['material_type'], $connection);
+                        ?>
                         <tr>
-                            <td class="text-center text-muted"> 1 </td>
-                            <td> ยาเสพติด </td>
-                            <td class="text-center"> </td>
-                            <td class="text-center"> </td>
-                            <td class="text-center"> </td>
+                            <td class="text-center text-muted"> <?php echo $i; ?> </td>
+                            <td> <?php echo $material_type; ?> </td>
+                            <td class="text-center"> <?php echo $rowm['material_num']; ?> </td>
+                            <td class="text-center"> <?php echo $material_unit; ?> </td>
                             <td class="text-center">
-                                <a href="#"><i class="fas fa-eye"></i></a>
-                            </td>
-                            <td class="text-center">
-                                <a href="#"><i class="fas fa-edit"></i></a>
+                                <a href="./?mode=offender/save_material&id=<?php echo $rowm['id']; ?>&offen=<?php echo $offen; ?>&plaint=<?php echo $id; ?>"><i class="fas fa-edit"></i></a>
                             </td>
                         </tr>
+                        <?php $i++;
+                            } ?>
                     </tbody>
                 </table>
             </div>

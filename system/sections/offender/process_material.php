@@ -2,20 +2,14 @@
 	#----- General Information -----#
     $id = !empty($_GET['id']) ? $_GET['id'] : "" ;
     $page_title = !empty($_POST['page_title']) ? $_POST['page_title'] : "" ;
-    $titlename = !empty($_POST['titlename']) ? $_POST['titlename'] : "" ;
-    $firstname = !empty($_POST['firstname']) ? $_POST['firstname'] : "" ;
-    $lastname = !empty($_POST['lastname']) ? $_POST['lastname'] : "" ;
-    $id_card = !empty($_POST['id_card']) ? $_POST['id_card'] : "" ;
-    $age = !empty($_POST['age']) ? $_POST['age'] : "" ;
-    $sex = !empty($_POST['sex']) ? $_POST['sex'] : "" ;
-    $phone = !empty($_POST['phone']) ? $_POST['phone'] : "" ;
-    $address = !empty($_POST['address']) ? $_POST['address'] : "" ;
-    $photo_de1 = !empty($_POST['photo_de1']) ? $_POST['photo_de1'] : "" ;
-    $photo_de2 = !empty($_POST['photo_de2']) ? $_POST['photo_de2'] : "" ;
-    $photo_de3 = !empty($_POST['photo_de3']) ? $_POST['photo_de3'] : "" ;
+    $plaint = !empty($_POST['plaint']) ? $_POST['plaint'] : "" ;
+    $offen = !empty($_POST['offen']) ? $_POST['offen'] : "" ;
+    $material_type = !empty($_POST['material_type']) ? $_POST['material_type'] : "" ;
+    $material_num = !empty($_POST['material_num']) ? $_POST['material_num'] : "" ;
+    $material_detail = !empty($_POST['material_detail']) ? $_POST['material_detail'] : "" ;
     #----- Picture -----#
     $photo_time = time();
-    $uploaddir = "assets/images/offender/";
+    $uploaddir = "assets/images/material/";
     $photo1 = $_FILES["photo1"]["tmp_name"];
     $photo2 = $_FILES["photo2"]["tmp_name"];
     $photo3 = $_FILES["photo3"]["tmp_name"];
@@ -24,10 +18,10 @@
     $photo_name3 = $_FILES["photo3"]["name"];
     #----- General Information -----#
 
-    if(!empty($firstname) && !empty($lastname)) {
+    if(!empty($plaint) && !empty($material_type)) {
         #----- Save Database -----#
 		if(empty($id)) {
-			$sql = "INSERT INTO offender () VALUES ()";
+			$sql = "INSERT INTO material () VALUES ()";
 			$result = mysqli_query($connection, $sql);
 			$id = mysqli_insert_id($connection);
         }
@@ -101,16 +95,12 @@
         }
 
         if(!empty($id)) {
-            $sql = "UPDATE offender SET ";
+            $sql = "UPDATE material SET ";
             $sql .= "status = '1',";
-            $sql .= "titlename = '$titlename',";
-            $sql .= "firstname = '$firstname',";
-            $sql .= "lastname = '$lastname',";
-            $sql .= "id_card = '$id_card',";
-            $sql .= "age = '$age',";
-            $sql .= "sex = '$sex',";
-            $sql .= "phone = '$phone',";
-            $sql .= "address = '$address',";
+            $sql .= "plaint = '$plaint',";
+            $sql .= "material_type = '$material_type',";
+            $sql .= "material_num = '$material_num',";
+            $sql .= "material_detail = '$material_detail',";
             $sql .= "photo1 = '$photo_fullname1',";
             $sql .= "photo2 = '$photo_fullname2',";
             $sql .= "photo3 = '$photo_fullname3',";
@@ -119,11 +109,11 @@
 
             $result = mysqli_query($connection, $sql);
 
-            $return_url = '&id='.$id;
+            $return_url = '&id='.$id.'&offen='.$offen.'&plaint='.$plaint;
             $message_alert = 'success';
 
         }
-        echo "<meta http-equiv=\"refresh\" content=\"0; url='./?mode=offender/save" . $return_url . "&message=" . $message_alert . "'\" >";
+        echo "<meta http-equiv=\"refresh\" content=\"0; url='./?mode=offender/save_material" . $return_url . "&message=" . $message_alert . "'\" >";
     }else{
         $message_alert = 'error';
         echo "<meta http-equiv=\"refresh\" content=\"0; url='./?mode=offender/index" . $return_url . "&message=" . $message_alert . "'\" >";

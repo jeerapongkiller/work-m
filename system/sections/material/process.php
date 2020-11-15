@@ -8,7 +8,7 @@
     $photo_de = !empty($_POST['photo_de']) ? $_POST['photo_de'] : "" ;
     #----- Picture -----#
     $photo_time = time();
-    $uploaddir = "assets/images/material/";
+    $uploaddir = "assets/images/material_type/";
 	$photo = $_FILES["photo"]["tmp_name"];
 	$photo_name = $_FILES["photo"]["name"];
     #----- General Information -----#
@@ -16,7 +16,7 @@
     if(!empty($name) && !empty($unit)) {
         #----- Save Database -----#
 		if(empty($id)) {
-			$sql = "INSERT INTO material () VALUES ()";
+			$sql = "INSERT INTO material_type () VALUES ()";
 			$result = mysqli_query($connection, $sql);
 			$id = mysqli_insert_id($connection);
         }
@@ -50,7 +50,7 @@
         }
 
         if(!empty($id)) {
-            $sql = "UPDATE material SET ";
+            $sql = "UPDATE material_type SET ";
             $sql .= "status = '1',";
             $sql .= "name = '$name',";
             $sql .= "unit = '$unit',";

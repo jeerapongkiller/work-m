@@ -98,14 +98,14 @@ $search_name = !empty($_POST['search_name']) ? $_POST['search_name'] : '';
                     <tbody>
                         <?php
                         $i = '1';
-                        $sqlmt = "SELECT * FROM material WHERE id > '0'";
+                        $sqlmt = "SELECT * FROM material_type WHERE id > '0'";
                         if (!empty($search_name)) {
                             $sqlmt .= "AND name LIKE '" . $search_name . "%' ";
                         }
                         $sqlmt .= "ORDER BY id ASC";
                         $resulmt = mysqli_query($connection, $sqlmt);
                         while ($rowmt = mysqli_fetch_assoc($resulmt)) {
-                            $photo = !empty($rowmt['photo']) ? "assets/images/material/".$rowmt['photo'] : "assets/images/no-image.jpg" ;
+                            $photo = !empty($rowmt['photo']) ? "assets/images/material_type/".$rowmt['photo'] : "assets/images/no-image.jpg" ;
                         ?>
                             <tr>
                                 <td class="text-center text-muted"><?php echo $i; ?></td>
