@@ -20,19 +20,25 @@
             <div class="widget-content-outer">
                 <div class="widget-content-left">
                     <h5><b>เพิ่มของกลาง</b></h5>
-                    <form method="POST" action="./?mode=material/process&id=<?php echo $id; ?>" enctype="multipart/form-data">
+                    <form class="needs-validation" method="POST" action="./?mode=material/process&id=<?php echo $id; ?>" enctype="multipart/form-data" novalidate>
                         <input type="hidden" name="page_title" id="page_title" value="<?php echo $page_title; ?>">
                         <div class="form-row">
                             <div class="col-md-6">
                                 <div class="position-relative form-group">
                                     <label for="name" class="">ชื่อของกลาง</label>
-                                    <input name="name" id="name" type="text" class="form-control" value="<?php echo $row['name']; ?>">
+                                    <input name="name" id="name" type="text" class="form-control" value="<?php echo $row['name']; ?>" required>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ ชื่อของกลาง!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="position-relative form-group">
                                     <label for="unit" class="">หน่วย</label>
-                                    <input name="unit" id="unit" type="text" class="form-control" value="<?php echo $row['unit']; ?>">
+                                    <input name="unit" id="unit" type="text" class="form-control" value="<?php echo $row['unit']; ?>" required>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ หน่วย!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -53,6 +59,26 @@
                             <button class="mt-2 btn btn-success"><i class="fas fa-plus"></i>&nbsp; บันทึก</button>
                         </div>
                     </form>
+                    <script>
+                        // Example starter JavaScript for disabling form submissions if there are invalid fields
+                        (function() {
+                            'use strict';
+                            window.addEventListener('load', function() {
+                                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                var forms = document.getElementsByClassName('needs-validation');
+                                // Loop over them and prevent submission
+                                var validation = Array.prototype.filter.call(forms, function(form) {
+                                    form.addEventListener('submit', function(event) {
+                                        if (form.checkValidity() === false) {
+                                            event.preventDefault();
+                                            event.stopPropagation();
+                                        }
+                                        form.classList.add('was-validated');
+                                    }, false);
+                                });
+                            }, false);
+                        })();
+                    </script>
                 </div>
             </div>
         </div>

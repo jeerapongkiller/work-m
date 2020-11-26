@@ -4,8 +4,8 @@
     $page_title = !empty($_POST['page_title']) ? $_POST['page_title'] : "" ;
     $offen = !empty($_POST['offen']) ? $_POST['offen'] : "" ;
     $plaint_type = !empty($_POST['plaint_type']) ? $_POST['plaint_type'] : "" ;
-    $plaint_date = !empty($_POST['plaint_date']) ? $_POST['plaint_date'] : "" ;
-    $plaint_time = !empty($_POST['plaint_time']) ? $_POST['plaint_time'] : "" ;
+    $plaint_date = !empty($_POST['plaint_date']) ? $_POST['plaint_date'] : date('Y-m-d') ;
+    $plaint_time = !empty($_POST['plaint_time']) ? $_POST['plaint_time'] : date('H:i') ;
     $plaint_address = !empty($_POST['plaint_address']) ? $_POST['plaint_address'] : "" ;
     #----- General Information -----#
 

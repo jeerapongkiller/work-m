@@ -49,25 +49,31 @@ if (!empty($id)) {
             <div class="widget-content-outer">
                 <div class="widget-content-left">
                     <h5><b>เพิ่มพนักงาน</b></h5>
-                    <form method="POST" action="./?mode=employee/process&id=<?php echo $id; ?>" enctype="multipart/form-data">
+                    <form class="needs-validation" method="POST" action="./?mode=employee/process&id=<?php echo $id; ?>" enctype="multipart/form-data" novalidate>
                         <input type="hidden" name="page_title" id="page_title" value="<?php echo $page_title; ?>">
                         <div class="form-row">
                             <div class="col-md-6">
                                 <div class="position-relative form-group">
                                     <label for="username" class="">ชื่อผู้ใช้</label>
-                                    <input name="username" id="username" type="text" class="form-control" value="<?php echo !empty($row['username']) ? $row['username'] : ''; ?>" <?php echo !empty($row['username']) ? 'readonly' : ''; ?> onkeyup="check_username()">
+                                    <input name="username" id="username" type="text" class="form-control" value="<?php echo !empty($row['username']) ? $row['username'] : ''; ?>" <?php echo !empty($row['username']) ? 'readonly' : ''; ?> onkeyup="check_username()" required>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ ชื่อผู้ใช้!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="position-relative form-group">
                                     <label for="password" class="">รหัสผ่าน</label>
-                                    <input name="password" id="password" type="text" class="form-control" value="<?php echo !empty($row['password']) ? $row['password'] : ''; ?>">
+                                    <input name="password" id="password" type="text" class="form-control" value="<?php echo !empty($row['password']) ? $row['password'] : ''; ?>" required>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ รหัสผ่าน!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="position-relative form-group">
                                     <label for="titlename" class="">คำนำหน้า</label>
-                                    <select id="titlename" name="titlename" class="form-control">
+                                    <select id="titlename" name="titlename" class="form-control" required>
                                         <option value=""> กรุณาเลือก... </option>
                                         <?php
                                         $sqltt = "SELECT * FROM titlename WHERE id > '0' ORDER BY id ASC";
@@ -79,18 +85,27 @@ if (!empty($id)) {
                                                                                         } ?>><?php echo $rowtt['name']; ?></option>
                                         <?php } /* while($rowtt = mysqli_fetch_assoc($resultt)){ */ ?>
                                     </select>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ คำนำหน้า!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="position-relative form-group">
                                     <label for="firstname" class="">ชื่อ</label>
-                                    <input name="firstname" id="firstname" type="text" class="form-control" value="<?php echo $row['firstname']; ?>">
+                                    <input name="firstname" id="firstname" type="text" class="form-control" value="<?php echo $row['firstname']; ?>" required>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ ชื่อ!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="position-relative form-group">
                                     <label for="lastname" class="">นามสกุล</label>
-                                    <input name="lastname" id="lastname" type="text" class="form-control" value="<?php echo $row['lastname']; ?>">
+                                    <input name="lastname" id="lastname" type="text" class="form-control" value="<?php echo $row['lastname']; ?>" required>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ นามสกุล!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -113,7 +128,10 @@ if (!empty($id)) {
                             <div class="col-md-6">
                                 <div class="position-relative form-group">
                                     <label for="phone" class="">เบอร์โทร</label>
-                                    <input name="phone" id="phone" type="text" class="form-control" value="<?php echo $row['phone']; ?>">
+                                    <input name="phone" id="phone" type="text" class="form-control" value="<?php echo $row['phone']; ?>" required>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ เบอร์โทร!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -134,6 +152,26 @@ if (!empty($id)) {
                             <button class="mt-2 btn btn-success"><i class="fas fa-plus"></i>&nbsp; บันทึก</button>
                         </div>
                     </form>
+                    <script>
+                        // Example starter JavaScript for disabling form submissions if there are invalid fields
+                        (function() {
+                            'use strict';
+                            window.addEventListener('load', function() {
+                                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                var forms = document.getElementsByClassName('needs-validation');
+                                // Loop over them and prevent submission
+                                var validation = Array.prototype.filter.call(forms, function(form) {
+                                    form.addEventListener('submit', function(event) {
+                                        if (form.checkValidity() === false) {
+                                            event.preventDefault();
+                                            event.stopPropagation();
+                                        }
+                                        form.classList.add('was-validated');
+                                    }, false);
+                                });
+                            }, false);
+                        })();
+                    </script>
                 </div>
             </div>
         </div>

@@ -26,6 +26,11 @@ if (!empty($id)) {
 ?>
 
 <script>
+    function number_control() {
+        var id_card = document.getElementById('id_card');
+        id_card.value = id_card.value.replace(/[^0-9]+/, '');
+    }
+
     function add_material(page) {
         var material_type = document.getElementById('material_type').value;
         if (material_type == 'add_material_type') {
@@ -107,7 +112,7 @@ if (!empty($id)) {
             <div class="widget-content-outer">
                 <div class="widget-content-left">
                     <h5><b>เพิ่มหลักฐาน</b></h5>
-                    <form method="POST" action="./?mode=offender/process_material&id=<?php echo $id; ?>" enctype="multipart/form-data">
+                    <form class="needs-validation" method="POST" action="./?mode=offender/process_material&id=<?php echo $id; ?>" enctype="multipart/form-data" novalidate>
                         <input type="hidden" name="page_title" id="page_title" value="<?php echo $page_title; ?>">
                         <input type="hidden" name="offen" id="offen" value="<?php echo $offen; ?>">
                         <input type="hidden" name="plaint" id="plaint" value="<?php echo $plaint; ?>">
@@ -115,7 +120,7 @@ if (!empty($id)) {
                             <div class="col-md-4">
                                 <div class="position-relative form-group" id="div-material-type">
                                     <label for="material_type" class=""><b> หลักฐาน </b></label>
-                                    <select id="material_type" name="material_type" class="form-control" onchange="add_material('ajax_add_material')">
+                                    <select id="material_type" name="material_type" class="form-control" onchange="add_material('ajax_add_material')" required>
                                         <option value="" id="zero_material"> กรุณาเลือก... </option>
                                         <?php
                                         $sqlmt = "SELECT * FROM material_type WHERE id > '0' AND status = '1' ORDER BY id ASC";
@@ -129,12 +134,18 @@ if (!empty($id)) {
                                         <?php } /* while ($rowpt = mysqli_fetch_assoc($resulpt)) { */ ?>
                                         <option value="add_material_type"> เพิ่มหลักฐาน </option>
                                     </select>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ หลักฐาน!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="position-relative form-group">
                                     <label for="material_num" class=""><b> จำนวน </b></label>
-                                    <input name="material_num" id="material_num" type="number" class="form-control" value="<?php echo !empty($row['material_num']) ? $row['material_num'] : ''; ?>">
+                                    <input name="material_num" id="material_num" type="number" class="form-control" value="<?php echo !empty($row['material_num']) ? $row['material_num'] : ''; ?>" onkeyup="number_control()" required>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ จำนวน!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -178,6 +189,26 @@ if (!empty($id)) {
                             <button class="mt-2 btn btn-success"><i class="fas fa-plus"></i>&nbsp; บันทึก</button>
                         </div>
                     </form>
+                    <script>
+                        // Example starter JavaScript for disabling form submissions if there are invalid fields
+                        (function() {
+                            'use strict';
+                            window.addEventListener('load', function() {
+                                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                var forms = document.getElementsByClassName('needs-validation');
+                                // Loop over them and prevent submission
+                                var validation = Array.prototype.filter.call(forms, function(form) {
+                                    form.addEventListener('submit', function(event) {
+                                        if (form.checkValidity() === false) {
+                                            event.preventDefault();
+                                            event.stopPropagation();
+                                        }
+                                        form.classList.add('was-validated');
+                                    }, false);
+                                });
+                            }, false);
+                        })();
+                    </script>
                 </div>
             </div>
         </div>

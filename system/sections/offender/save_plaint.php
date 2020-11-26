@@ -86,14 +86,14 @@ if (!empty($id)) {
             <div class="widget-content-outer">
                 <div class="widget-content-left">
                     <h5><b>เพิ่มข้อหา</b></h5>
-                    <form method="POST" action="./?mode=offender/process_plaint&id=<?php echo $id; ?>" enctype="multipart/form-data">
+                    <form class="needs-validation" method="POST" action="./?mode=offender/process_plaint&id=<?php echo $id; ?>" enctype="multipart/form-data" novalidate>
                         <input type="hidden" name="page_title" id="page_title" value="<?php echo $page_title; ?>">
                         <input type="hidden" name="offen" id="offen" value="<?php echo $offen; ?>">
                         <div class="form-row">
                             <div class="col-md-4">
                                 <div class="position-relative form-group" id="div-plaint-type">
                                     <label for="plaint_type" class=""><b>ข้อหา</b></label>
-                                    <select id="plaint_type" name="plaint_type" class="form-control" onchange="add_plaintt('ajax_add_plaint')">
+                                    <select id="plaint_type" name="plaint_type" class="form-control" onchange="add_plaintt('ajax_add_plaint')" required>
                                         <option value="" id="zero_plaint_type"> กรุณาเลือก... </option>
                                         <?php
                                         $sqlpt = "SELECT * FROM plaint_type WHERE id > '0' AND status = '1' ORDER BY id ASC";
@@ -107,6 +107,9 @@ if (!empty($id)) {
                                         <?php } /* while ($rowpt = mysqli_fetch_assoc($resulpt)) { */ ?>
                                         <option value="add_plaint_type"> เพิ่มข้อหา </option>
                                     </select>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ ข้อหา!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -132,6 +135,26 @@ if (!empty($id)) {
                             <button class="mt-2 btn btn-success"><i class="fas fa-plus"></i>&nbsp; บันทึก</button>
                         </div>
                     </form>
+                    <script>
+                        // Example starter JavaScript for disabling form submissions if there are invalid fields
+                        (function() {
+                            'use strict';
+                            window.addEventListener('load', function() {
+                                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                var forms = document.getElementsByClassName('needs-validation');
+                                // Loop over them and prevent submission
+                                var validation = Array.prototype.filter.call(forms, function(form) {
+                                    form.addEventListener('submit', function(event) {
+                                        if (form.checkValidity() === false) {
+                                            event.preventDefault();
+                                            event.stopPropagation();
+                                        }
+                                        form.classList.add('was-validated');
+                                    }, false);
+                                });
+                            }, false);
+                        })();
+                    </script>
                 </div>
             </div>
         </div>

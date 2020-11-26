@@ -18,6 +18,11 @@ if (!empty($id)) {
 ?>
 
 <script>
+    function number_control() {
+        var id_card = document.getElementById('id_card');
+        id_card.value = id_card.value.replace(/[^0-9]+/, '');
+    }
+
     function view_material(plaint_id, plaint_name, page) {
         if (plaint_id != '') {
             jQuery.ajax({
@@ -71,13 +76,13 @@ if (!empty($id)) {
             <div class="widget-content-outer">
                 <div class="widget-content-left">
                     <h5><b>เพิ่มผู้ต้องหา</b></h5>
-                    <form method="POST" action="./?mode=offender/process&id=<?php echo $id; ?>" enctype="multipart/form-data">
+                    <form class="needs-validation" method="POST" action="./?mode=offender/process&id=<?php echo $id; ?>" enctype="multipart/form-data" novalidate>
                         <input type="hidden" name="page_title" id="page_title" value="<?php echo $page_title; ?>">
                         <div class="form-row">
                             <div class="col-md-4">
                                 <div class="position-relative form-group">
                                     <label for="titlename" class=""><b>คำนำหน้า</b></label>
-                                    <select id="titlename" name="titlename" class="form-control">
+                                    <select id="titlename" name="titlename" class="form-control" required>
                                         <option value=""> กรุณาเลือก... </option>
                                         <?php
                                         $sqltt = "SELECT * FROM titlename WHERE id > '0' ORDER BY id ASC";
@@ -89,36 +94,58 @@ if (!empty($id)) {
                                                                                         } ?>><?php echo $rowtt['name']; ?></option>
                                         <?php } /* while($rowtt = mysqli_fetch_assoc($resultt)){ */ ?>
                                     </select>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ คำนำหน้า!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="position-relative form-group">
                                     <label for="firstname" class=""><b>ชื่อ</b></label>
-                                    <input name="firstname" id="firstname" type="text" class="form-control" value="<?php echo !empty($row['firstname']) ? $row['firstname'] : ''; ?>">
+                                    <input name="firstname" id="firstname" type="text" class="form-control" value="<?php echo !empty($row['firstname']) ? $row['firstname'] : ''; ?>" required>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ ชื่อ!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="position-relative form-group">
                                     <label for="lastname" class=""><b>นามสกุล</b></label>
-                                    <input name="lastname" id="lastname" type="text" class="form-control" value="<?php echo !empty($row['lastname']) ? $row['lastname'] : ''; ?>">
+                                    <input name="lastname" id="lastname" type="text" class="form-control" value="<?php echo !empty($row['lastname']) ? $row['lastname'] : ''; ?>" required>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ นามสกุล!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="position-relative form-group">
                                     <label for="id_card" class=""><b>รหัสบัตรประชาชน</b></label>
-                                    <input name="id_card" id="id_card" type="text" class="form-control" value="<?php echo !empty($row['id_card']) ? $row['id_card'] : ''; ?>">
+                                    <input name="id_card" id="id_card" type="text" class="form-control" value="<?php echo !empty($row['id_card']) ? $row['id_card'] : ''; ?>" onkeyup="number_control()" required>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ รหัสบัตรประชาชน!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="position-relative form-group">
                                     <label for="age" class=""><b>อายุ</b></label>
-                                    <input name="age" id="age" type="text" class="form-control" value="<?php echo !empty($row['age']) ? $row['age'] : ''; ?>">
+                                    <input name="age" id="age" type="text" class="form-control" value="<?php echo !empty($row['age']) ? $row['age'] : ''; ?>" required>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ อายุ!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="position-relative form-group">
                                     <label for="sex" class=""><b>เพศ</b></label>
-                                    <input name="sex" id="sex" type="text" class="form-control" value="<?php echo !empty($row['sex']) ? $row['sex'] : ''; ?>">
+                                    <select id="sex" name="sex" class="form-control" required>
+                                        <option value=""> กรุณาเลือก... </option>
+                                        <option value="ชาย" <?php echo !empty($row['sex']) && $row['sex'] == 'ชาย' ? 'selected' : ''; ?>> ชาย </option>
+                                        <option value="หญิง" <?php echo !empty($row['sex']) && $row['sex'] == 'หญิง' ? 'selected' : ''; ?>> หญิง </option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        กรุณาระบุ เพศ!
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -162,6 +189,26 @@ if (!empty($id)) {
                             <button class="mt-2 btn btn-success"><i class="fas fa-plus"></i>&nbsp; บันทึก</button>
                         </div>
                     </form>
+                    <script>
+                        // Example starter JavaScript for disabling form submissions if there are invalid fields
+                        (function() {
+                            'use strict';
+                            window.addEventListener('load', function() {
+                                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                                var forms = document.getElementsByClassName('needs-validation');
+                                // Loop over them and prevent submission
+                                var validation = Array.prototype.filter.call(forms, function(form) {
+                                    form.addEventListener('submit', function(event) {
+                                        if (form.checkValidity() === false) {
+                                            event.preventDefault();
+                                            event.stopPropagation();
+                                        }
+                                        form.classList.add('was-validated');
+                                    }, false);
+                                });
+                            }, false);
+                        })();
+                    </script>
                 </div>
             </div>
         </div>
