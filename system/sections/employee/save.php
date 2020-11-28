@@ -11,7 +11,7 @@ if (!empty($id)) {
 
     $row = mysqli_fetch_assoc($result);
 
-    $page_title = $row['username'];
+    $page_title = $row['firstname'].' '.$row['lastname'];
 } else {
     $page_title = "Create";
 }
@@ -42,6 +42,20 @@ if (!empty($id)) {
         });
     }
 </script>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="./?mode=employee/index">พนักงาน</a></li>
+                <li class="breadcrumb-item active"><?php echo $page_title; ?></li>
+            </ol>
+        </div>
+    </div>
+    <div class="col-md-4 text-right">
+
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-12">

@@ -1,5 +1,16 @@
-<div class="text-right">
-    <a href="./?mode=employee/save" class="mb-3 btn btn-info btn-lg"><i class="fas fa-plus"></i>&nbsp; เพิ่มข้อมูล</a>
+<div class="row">
+    <div class="col-md-8">
+        <div class="nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">พนักงาน</li>
+            </ol>
+        </div>
+    </div>
+    <div class="col-md-4 text-right">
+        <div class="text-right">
+            <a href="./?mode=employee/save" class="mb-3 btn btn-info btn-lg"><i class="fas fa-plus"></i>&nbsp; เพิ่มข้อมูล</a>
+        </div>
+    </div>
 </div>
 
 <script>

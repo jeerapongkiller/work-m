@@ -14,6 +14,21 @@
 		$page_title = "Create";
 	}
 ?>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="nav">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="./?mode=plaint/index">ข้อหา</a></li>
+                <li class="breadcrumb-item active"><?php echo $page_title; ?></li>
+            </ol>
+        </div>
+    </div>
+    <div class="col-md-4 text-right">
+
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-3 widget-content">
